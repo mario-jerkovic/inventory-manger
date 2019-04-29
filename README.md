@@ -1,1 +1,1 @@
-# inventory-manger
+# Inventory-Manger
