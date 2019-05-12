@@ -21,22 +21,22 @@ import './RemoveToolbar.css'
 export const RemoveToolbar: React.FunctionComponent<RemoveToolbarProps> = (props) => {
     const {
         count,
+        onBackClick,
         show,
     } = props
 
     const transitions = useTransition(show, null, {
         from: {
-            position: 'absolute',
             opacity: 0,
-            transform: 'translateY(-15px)',
+            transform: 'translate3d(0, -15px, 0)',
         },
         enter: {
             opacity: 1,
-            transform: 'translateY(0px)',
+            transform: 'translate3d(0, 0px, 0)',
         },
         leave: {
             opacity: 0,
-            transform: 'translateY(-15px)',
+            transform: 'translate3d(0, -15px, 0)',
         },
     })
 
@@ -57,6 +57,7 @@ export const RemoveToolbar: React.FunctionComponent<RemoveToolbarProps> = (props
                                 <TopAppBarSection >
                                     <TopAppBarNavigationIcon
                                         icon="arrow_back"
+                                        onClick={onBackClick}
                                     />
                                     <TopAppBarTitle >
                                         {count}

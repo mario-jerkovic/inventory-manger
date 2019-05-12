@@ -3,7 +3,12 @@ export type RemoveToolbarProps = {
      *
      * @default "0"
      */
-    count?: number
+    count?: number,
+    /**
+     *
+     * @default ""
+     */
+    onBackClick?: () => void,
     /**
      *
      * @default "false"

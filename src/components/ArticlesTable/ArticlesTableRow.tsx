@@ -32,7 +32,7 @@ export const ArticlesTableRow = React.memo<ArticlesTableRowProps>((props) => {
         <DataTableRow onClick={selected ? undefined : onClick} >
             <DataTableCell
                 alignMiddle={true}
-                className="table-body__cell"
+                className="article-table-body__cell"
                 onClick={handleSelection}
             >
                 <Avatar
@@ -41,19 +41,19 @@ export const ArticlesTableRow = React.memo<ArticlesTableRowProps>((props) => {
             </DataTableCell >
             <DataTableCell
                 alignStart={true}
-                className="table-body__cell"
+                className="article-table-body__cell"
             >
                 {name}
             </DataTableCell >
             <DataTableCell
                 alignEnd={true}
-                className="table-body__cell"
+                className="article-table-body__cell"
             >
                 {quantity}
             </DataTableCell >
             <DataTableCell
                 alignEnd={true}
-                className="table-body__cell"
+                className="article-table-body__cell"
             >
                 {new Date(modifiedDate).toLocaleString()}
             </DataTableCell >

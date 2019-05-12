@@ -1,1 +1,10 @@
 @import "~@material/top-app-bar/dist/mdc.top-app-bar.css";
+
+.app-bar {
+    width: 100%;
+    position: fixed;
+}
+
+.app-bar__item {
+    position: relative;
+}

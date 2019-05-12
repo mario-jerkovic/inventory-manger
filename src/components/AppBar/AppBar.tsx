@@ -6,6 +6,10 @@ import {
     TopAppBarSection,
     TopAppBarTitle,
 } from '@rmwc/top-app-bar'
+import {
+    animated,
+    useSpring,
+} from 'react-spring'
 
 import {
     AppBarProps,
@@ -15,17 +19,34 @@ import './AppBar.css'
 
 export const AppBar = React.memo<AppBarProps>(() => {
 
+    const springStyle = useSpring({
+        from: {
+            transform: 'translate3d(0, -100%, 0)',
+        },
+        to: {
+            transform: 'translate3d(0, 0%, 0)',
+        },
+    })
+
     return (
         <>
-            <TopAppBar fixed={false} >
-                <TopAppBarRow >
-                    <TopAppBarSection >
-                        <TopAppBarTitle >
-                            Inventory manager
-                        </TopAppBarTitle >
-                    </TopAppBarSection >
-                </TopAppBarRow >
-            </TopAppBar >
+            <animated.div
+                className="app-bar"
+                style={springStyle}
+            >
+                <TopAppBar
+                    fixed={false}
+                    className="app-bar__item"
+                >
+                    <TopAppBarRow >
+                        <TopAppBarSection >
+                            <TopAppBarTitle >
+                                Inventory manager
+                            </TopAppBarTitle >
+                        </TopAppBarSection >
+                    </TopAppBarRow >
+                </TopAppBar >
+            </animated.div >
             <TopAppBarFixedAdjust />
         </>
     )

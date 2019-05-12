@@ -21,22 +21,29 @@ import {
     Drawer,
 } from '../components/Drawer'
 import {
+    Fab,
+} from '../components/Fab'
+import {
     NewQuantityForm,
 } from '../components/NewQuantityForm'
 import {
     UpdateQuantityForm,
 } from '../components/UpdateQuantityForm'
+import {
+    NewArticleForm,
+} from '../components/NewArticleForm'
+import {
+    RemoveToolbar,
+} from '../components/RemoveToolbar'
 
 import './Articles.css'
-import { Fab } from '@rmwc/fab'
-import { NewArticleForm } from '../components/NewArticleForm'
-import { RemoveToolbar } from '../components/RemoveToolbar'
 
 const Articles: React.FunctionComponent<{}> = () => {
 
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
     const [isDialogOpen, setIsDialogOpen] = React.useState(false)
     const [forRemoval, setForRemoval] = React.useState<string[]>([])
+
     const firebaseContext: Firebase = React.useContext(FirebaseContext)
 
     const {
@@ -73,14 +80,6 @@ const Articles: React.FunctionComponent<{}> = () => {
         }
     ), [forRemoval])
 
-    if (loading) {
-        return (
-            <div >
-                Loading data...
-            </div >
-        )
-    }
-
     if (error) {
         return (
             <div >
@@ -91,13 +90,6 @@ const Articles: React.FunctionComponent<{}> = () => {
         )
     }
 
-    if (!value) {
-        return (
-            <div >
-                No data...
-            </div >
-        )
-    }
 
     return (
         <>
@@ -105,6 +97,7 @@ const Articles: React.FunctionComponent<{}> = () => {
             />
             <RemoveToolbar
                 count={forRemoval.length}
+                onBackClick={() => setForRemoval([])}
                 show={forRemoval.length > 0}
             />
             <Drawer
@@ -118,28 +111,27 @@ const Articles: React.FunctionComponent<{}> = () => {
                 />
             </Drawer >
             <div className="articles__layout" >
-                <ArticlesTable >
-                    {Object.entries<Article>(value.val()).map(([key, article]) => (
-                        <ArticlesTableRow
-                            key={key}
-                            modifiedDate={article.modifiedDate}
-                            name={article.name}
-                            onClick={handleOpenDrawer}
-                            onSelection={handleRowSelection(key)}
-                            selected={forRemoval.includes(key)}
-                            quantity={article.quantity}
-                        />
-                    ))}
-                </ArticlesTable >
+                {!value ? <div >Loading...</div > : (
+                    <ArticlesTable >
+                        {Object.entries<Article>(value.val()).map(([key, article]) => (
+                            <ArticlesTableRow
+                                key={key}
+                                modifiedDate={article.modifiedDate}
+                                name={article.name}
+                                onClick={handleOpenDrawer}
+                                onSelection={handleRowSelection(key)}
+                                selected={forRemoval.includes(key)}
+                                quantity={article.quantity}
+                            />
+                        ))}
+                    </ArticlesTable >
+                )}
             </div >
             <NewArticleForm
                 isOpen={isDialogOpen}
                 onClose={handleDialogClose}
             />
             <Fab
-                className="articles__fab"
-                icon="add"
-                label="Kreiraj"
                 onClick={handleDialogOpen}
             />
         </>

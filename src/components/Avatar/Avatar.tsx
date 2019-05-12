@@ -25,35 +25,35 @@ export const Avatar = React.memo<AvatarProps>((props) => {
     const avatarSpringRef = React.useRef<any>(null)
     const checkSpringRef = React.useRef<any>(null)
 
-    const avatarSpringStyles = {
+    const avatarSlide = {
         transform: `rotateY(${isActive ? '180deg' : '0deg'})`,
     }
 
-    const checkSpringStyles = {
+    const checkFade = {
         opacity: isActive ? 1 : 0,
     }
 
-    const avatarStyles = useSpring({
+    const avatarSpringStyle = useSpring({
         ref: avatarSpringRef,
-        from: avatarSpringStyles,
-        to: avatarSpringStyles,
+        from: avatarSlide,
+        to: avatarSlide,
     })
 
-    const checkStyles = useSpring({
+    const checkSpringStyle = useSpring({
         ref: checkSpringRef,
-        from: checkSpringStyles,
-        to: checkSpringStyles,
+        from: checkFade,
+        to: checkFade,
     })
 
     useChain(
         isActive ? [avatarSpringRef, checkSpringRef] : [checkSpringRef, avatarSpringRef],
-        [0, 0.25],
+        isActive ? [0, 0.25] : [0, 0.10],
     )
 
     return (
         <animated.div
             className="avatar"
-            style={avatarStyles}
+            style={avatarSpringStyle}
         >
             <Theme
                 use={['primaryBg', 'onPrimary']}
@@ -68,7 +68,7 @@ export const Avatar = React.memo<AvatarProps>((props) => {
                 <div className="avatar__item avatar__item--back" >
                     <animated.div
                         className="avatar__icon"
-                        style={checkStyles}
+                        style={checkSpringStyle}
                     >
                         <Icon icon="check" />
                     </animated.div >
