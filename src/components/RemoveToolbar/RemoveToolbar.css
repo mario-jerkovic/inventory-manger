@@ -1,0 +1,6 @@
+@import "~@material/top-app-bar/dist/mdc.top-app-bar.css";
+
+.remove-toolbar {
+    width: 100%;
+    z-index: 4;
+}

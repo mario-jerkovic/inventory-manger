@@ -1,0 +1,13 @@
+@import "~@material/fab/dist/mdc.fab.css";
+
+.articles__fab {
+    position: fixed;
+    bottom: 1.25rem;
+    right: 1.25rem;
+    z-index: 1;
+}
+
+.articles__layout {
+    flex: 1;
+    overflow: hidden;
+}

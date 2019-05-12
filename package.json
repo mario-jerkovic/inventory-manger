@@ -9,30 +9,43 @@
         "eject": "react-scripts eject"
     },
     "dependencies": {
+        "@rmwc/button": "^5.4.3",
+        "@rmwc/data-table": "^5.4.3",
+        "@rmwc/dialog": "^5.5.1",
+        "@rmwc/drawer": "^5.5.0",
+        "@rmwc/fab": "^5.4.3",
+        "@rmwc/icon": "^5.5.1",
+        "@rmwc/icon-button": "^5.5.0",
+        "@rmwc/list": "^5.5.1",
+        "@rmwc/textfield": "^5.5.1",
+        "@rmwc/theme": "^5.5.0",
+        "@rmwc/top-app-bar": "^5.4.3",
+        "@rmwc/typography": "^5.4.3",
+        "firebase": "^6.0.2",
+        "node-sass": "^4.12.0",
         "react": "^16.8.6",
         "react-dom": "^16.8.6",
-        "react-scripts": "3.0.0",
+        "react-firebase-hooks": "^1.2.0",
+        "react-router-dom": "^5.0.0",
+        "react-scripts": "3.0.1",
+        "react-spring": "^8.0.20",
         "typescript": "3.4.5"
     },
     "devDependencies": {
+        "@firebase/app-types": "0.x",
+        "@firebase/util": "0.x",
         "@types/jest": "^24.0.12",
-        "@types/node": "^11.13.8",
+        "@types/node": "^12.0.0",
         "@types/react": "^16.8.14",
-        "@types/react-dom": "^16.8.4"
+        "@types/react-dom": "^16.8.4",
+        "@types/react-router-dom": "^4.3.2"
     },
     "eslintConfig": {
         "extends": "react-app"
     },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    }
+    "browserslist": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+    ]
 }

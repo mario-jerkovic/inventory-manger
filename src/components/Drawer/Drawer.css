@@ -1,0 +1,9 @@
+@import "~@material/drawer/dist/mdc.drawer.css";
+
+.drawer {
+    width: 350px;
+}
+
+.mdc-drawer.mdc-drawer--open:not(.mdc-drawer--closing) + .mdc-drawer-app-content {
+    margin-left: 350px;
+}
