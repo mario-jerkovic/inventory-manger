@@ -11,6 +11,11 @@ export type RemoveToolbarProps = {
     onBackClick?: () => void,
     /**
      *
+     * @default ""
+     */
+    onDeleteClick?: () => void,
+    /**
+     *
      * @default "false"
      */
     show?: boolean,

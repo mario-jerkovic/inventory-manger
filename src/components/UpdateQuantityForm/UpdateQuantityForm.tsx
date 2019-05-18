@@ -5,9 +5,6 @@ import {
 import {
     TextField,
 } from '@rmwc/textfield'
-import {
-    ListDivider,
-} from '@rmwc/list'
 
 import {
     UpdateQuantityFormProps,
@@ -19,9 +16,24 @@ import {
     FormTitle,
 } from '../FormTitle'
 
+import {
+    quantityReducer,
+} from '../../reducers/quantity'
+
 import './UpdateQuantityForm.css'
 
 export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps> = (props) => {
+    const {
+        currentQuantity,
+        onSubmit,
+    } = props
+
+    const [state, dispatch] = React.useReducer(quantityReducer, {
+        price: 0,
+        totalAmount: 0,
+        remainingQuantity: currentQuantity,
+    })
+
     const formRef = React.useRef<HTMLFormElement>(null)
 
     const handleOnSubmit = React.useCallback((event: React.FormEvent<HTMLFormElement>) => {
@@ -31,21 +43,40 @@ export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps
             return
         }
 
-        const formData = new FormData(formRef.current)
-
-        formData.forEach((value, key) => {
-            console.log(key, value)
+        onSubmit({
+            quantity: state.remainingQuantity,
         })
 
         formRef.current.reset()
-    }, [formRef])
+    }, [formRef, state.remainingQuantity, onSubmit])
+
+    const handlePriceChange = React.useCallback((event: React.FormEvent<any>) => {
+        dispatch({
+            type: 'update_price',
+            payload: {
+                quantity: currentQuantity,
+                // @ts-ignore
+                price: Number(event.target.value),
+            },
+        })
+    }, [currentQuantity])
+
+    const handleTotalAmountChange = React.useCallback((event: React.FormEvent<any>) => {
+        dispatch({
+            type: 'update_total_amount',
+            payload: {
+                quantity: currentQuantity,
+                // @ts-ignore
+                totalAmount: Number(event.target.value),
+            },
+        })
+    }, [currentQuantity])
 
     return (
         <>
             <FormTitle >
                 Uređivanje stanja
             </FormTitle >
-            <ListDivider />
             <form
                 className="update-quantity__form"
                 onSubmit={handleOnSubmit}
@@ -55,18 +86,22 @@ export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps
                     label="Cijena artikla"
                     name="price"
                     outlined={true}
+                    onChange={handlePriceChange}
                     required={true}
                     step="any"
                     type="number"
+                    value={state.price}
                 />
                 <FormSpacer />
                 <TextField
                     label="Ukupan iznos"
                     name="totalAmount"
                     outlined={true}
+                    onChange={handleTotalAmountChange}
                     required={true}
                     step="any"
                     type="number"
+                    value={state.totalAmount}
                 />
                 <FormSpacer />
                 <TextField
@@ -74,6 +109,7 @@ export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps
                     label="Preostala količina"
                     name="remainingQuantity"
                     outlined={true}
+                    value={state.remainingQuantity}
                 />
                 <FormSpacer />
                 <div className="update-quantity__action" >

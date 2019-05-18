@@ -22,6 +22,7 @@ export const RemoveToolbar: React.FunctionComponent<RemoveToolbarProps> = (props
     const {
         count,
         onBackClick,
+        onDeleteClick,
         show,
     } = props
 
@@ -68,6 +69,7 @@ export const RemoveToolbar: React.FunctionComponent<RemoveToolbarProps> = (props
                                 >
                                     <TopAppBarActionItem
                                         icon="delete"
+                                        onClick={onDeleteClick}
                                     />
                                 </TopAppBarSection >
                             </TopAppBarRow >

@@ -3,7 +3,7 @@
 @import '~@material/notched-outline/dist/mdc.notched-outline.css';
 @import '~@material/line-ripple/dist/mdc.line-ripple.css';
 @import "~@material/button/dist/mdc.button.css";
-@import "~@material/list/dist/mdc.list.css";
+@import "~@rmwc/list/collapsible-list.css";
 
 .new-quantity__form {
     display: flex;

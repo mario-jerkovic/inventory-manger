@@ -3,6 +3,17 @@ export type ArticlesTableProps = {}
 export type ArticlesTableRowProps = {
     /**
      *
+     * @default {
+     *  day: 'numeric',
+     *  month: 'numeric',
+     *  year: 'numeric',
+     *  hour: 'numeric',
+     *  minute: 'numeric',
+     * }
+     */
+    dateTimeOptions?: Intl.DateTimeFormatOptions,
+    /**
+     *
      * @default ""
      */
     modifiedDate: string,

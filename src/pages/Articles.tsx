@@ -24,12 +24,15 @@ import {
     Fab,
 } from '../components/Fab'
 import {
+    NewQuantity,
     NewQuantityForm,
 } from '../components/NewQuantityForm'
 import {
+    UpdatedQuantity,
     UpdateQuantityForm,
 } from '../components/UpdateQuantityForm'
 import {
+    NewArticle,
     NewArticleForm,
 } from '../components/NewArticleForm'
 import {
@@ -37,12 +40,40 @@ import {
 } from '../components/RemoveToolbar'
 
 import './Articles.css'
+import { articleDrawerReducer } from '../reducers/articleDrawer'
+import { articleDialogReducer } from '../reducers/articleDialog'
+import { articlesTableReducer } from '../reducers/articlesTable'
+import { CircularProgress } from '@rmwc/circular-progress'
+import { Typography } from '@rmwc/typography'
+
 
 const Articles: React.FunctionComponent<{}> = () => {
 
-    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false)
-    const [isDialogOpen, setIsDialogOpen] = React.useState(false)
-    const [forRemoval, setForRemoval] = React.useState<string[]>([])
+    const [articleDialogState, articleDialogDispatch] = React.useReducer(articleDialogReducer, {
+        isDialogOpen: false,
+    })
+
+    const [articleDrawerState, articleDrawerDispatch] = React.useReducer(articleDrawerReducer, {
+        articleId: null,
+        isDrawerOpen: false,
+    })
+
+    const [articlesTableState, articlesTableDispatch] = React.useReducer(articlesTableReducer, {
+        selectedArticleIds: [],
+    })
+
+    const {
+        isDialogOpen,
+    } = articleDialogState
+
+    const {
+        articleId,
+        isDrawerOpen,
+    } = articleDrawerState
+
+    const {
+        selectedArticleIds,
+    } = articlesTableState
 
     const firebaseContext: Firebase = React.useContext(FirebaseContext)
 
@@ -52,33 +83,75 @@ const Articles: React.FunctionComponent<{}> = () => {
         value,
     } = useObject(firebaseContext.articlesRef())
 
-    const handleOpenDrawer = React.useCallback(() => {
-        setIsDrawerOpen(true)
+    const handleDrawerOpen = React.useCallback((articleId: string) => () => {
+        articleDrawerDispatch({
+            type: 'open',
+            payload: articleId,
+        })
     }, [])
 
-    const handleCloseDrawer = React.useCallback(() => {
-        setIsDrawerOpen(false)
+    const handleDrawerClose = React.useCallback(() => {
+        articleDrawerDispatch({ type: 'close' })
     }, [])
 
     const handleDialogOpen = React.useCallback(() => {
-        setIsDialogOpen(true)
+        articleDialogDispatch({ type: 'open' })
     }, [])
 
     const handleDialogClose = React.useCallback(() => {
-        setIsDialogOpen(false)
+        articleDialogDispatch({ type: 'close' })
     }, [])
 
-    const handleRowSelection = React.useCallback((key: string) => (
-        () => {
-            if (forRemoval.includes(key)) {
-                setForRemoval(forRemoval.filter((forRemovalKey) => (
-                    forRemovalKey !== key
-                )))
-            } else {
-                setForRemoval([...forRemoval, key])
-            }
+    const handleBackClick = React.useCallback(() => {
+        articlesTableDispatch({ type: 'deselect_all' })
+    }, [])
+
+    const handleDeleteClick = React.useCallback(() => {
+        selectedArticleIds.map((selectedArticleId) => (
+            firebaseContext.removeArticle(selectedArticleId).then(() => (
+                articlesTableDispatch({
+                    type: 'deselect',
+                    payload: selectedArticleId,
+                })
+            ))
+        ))
+    }, [selectedArticleIds, firebaseContext])
+
+    const handleRowSelection = React.useCallback((articleId: string) => () => {
+        articlesTableDispatch({
+            type: 'select',
+            payload: articleId,
+        })
+    }, [])
+
+    /**
+     * Handler for creation of new article
+     *
+     * after article is created we are closing the form dialog
+     */
+    const handleNewArticleSubmit = React.useCallback(async (newArticle: NewArticle) => {
+        await firebaseContext.createArticle(
+            newArticle.name,
+            newArticle.quantity,
+        )
+
+        handleDialogClose()
+    }, [firebaseContext, handleDialogClose])
+
+    /**
+     * Handler for updating currently selected article
+     *
+     * after article quantity is updated we are closing the drawer
+     */
+    const handleArticleQuantity = React.useCallback(async (quantityResult: NewQuantity | UpdatedQuantity) => {
+        if (!articleId) {
+            return
         }
-    ), [forRemoval])
+
+        await firebaseContext.updateArticleQuantity(articleId, quantityResult.quantity)
+
+        handleDrawerClose()
+    }, [articleId, firebaseContext, handleDrawerClose])
 
     if (error) {
         return (
@@ -90,46 +163,73 @@ const Articles: React.FunctionComponent<{}> = () => {
         )
     }
 
+    let articleCollections: null | { [key: string]: Article } = null
+
+    if (value) {
+        articleCollections = value.val() || {}
+    }
+
+    let selectedArticle: null | Article = null
+
+    if (articleId && articleCollections) {
+        selectedArticle = articleCollections[articleId]
+    }
 
     return (
         <>
-            <AppBar
-            />
+            <AppBar />
             <RemoveToolbar
-                count={forRemoval.length}
-                onBackClick={() => setForRemoval([])}
-                show={forRemoval.length > 0}
+                count={selectedArticleIds.length}
+                onBackClick={handleBackClick}
+                onDeleteClick={handleDeleteClick}
+                show={selectedArticleIds.length > 0}
             />
             <Drawer
                 isOpen={isDrawerOpen}
-                onClose={handleCloseDrawer}
-                title="ToDo"
+                onClose={handleDrawerClose}
+                title={selectedArticle ? selectedArticle.name : ''}
             >
                 <UpdateQuantityForm
+                    currentQuantity={selectedArticle ? selectedArticle.quantity : 0}
+                    onSubmit={handleArticleQuantity}
                 />
                 <NewQuantityForm
+                    currentQuantity={selectedArticle ? selectedArticle.quantity : 0}
+                    onSubmit={handleArticleQuantity}
                 />
             </Drawer >
             <div className="articles__layout" >
-                {!value ? <div >Loading...</div > : (
+                {loading || !articleCollections ? (
+                    <div className="articles__loading" >
+                        <CircularProgress size="large" />
+                        <Typography
+                            className="articles__loading-text"
+                            use="subtitle1"
+                        >
+                            Učitavanje...
+                        </Typography >
+                    </div >
+                ) : (
                     <ArticlesTable >
-                        {Object.entries<Article>(value.val()).map(([key, article]) => (
-                            <ArticlesTableRow
-                                key={key}
-                                modifiedDate={article.modifiedDate}
-                                name={article.name}
-                                onClick={handleOpenDrawer}
-                                onSelection={handleRowSelection(key)}
-                                selected={forRemoval.includes(key)}
-                                quantity={article.quantity}
-                            />
-                        ))}
+                        {Object.entries<Article>(articleCollections)
+                            .map(([key, { name, modifiedDate, quantity }]) => (
+                                <ArticlesTableRow
+                                    key={key}
+                                    modifiedDate={modifiedDate}
+                                    name={name}
+                                    onClick={handleDrawerOpen(key)}
+                                    onSelection={handleRowSelection(key)}
+                                    selected={selectedArticleIds.includes(key)}
+                                    quantity={quantity}
+                                />
+                            ))}
                     </ArticlesTable >
                 )}
             </div >
             <NewArticleForm
                 isOpen={isDialogOpen}
                 onClose={handleDialogClose}
+                onSubmit={handleNewArticleSubmit}
             />
             <Fab
                 onClick={handleDialogOpen}

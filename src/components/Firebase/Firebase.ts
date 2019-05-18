@@ -25,4 +25,32 @@ export class Firebase {
     public articlesRef = () => (
         this.database.ref('articles')
     )
+
+    public createArticle = (name: string, quantity: number) => {
+        const now = new Date().toISOString()
+
+        return this.database.ref('articles').push({
+            name,
+            quantity,
+            createdDate: now,
+            modifiedDate: now,
+        })
+    }
+
+    public removeArticle = (id: string) => (
+        this.database.ref(`articles/${id}`).remove()
+    )
+
+    public updateArticleQuantity = (id: string, quantity: number) => {
+        const articleRef = this.database.ref(`articles/${id}`)
+
+        return Promise.all([
+            articleRef
+                .child('quantity')
+                .set(quantity),
+            articleRef
+                .child('modifiedDate')
+                .set(new Date().toISOString()),
+        ])
+    }
 }

@@ -6,10 +6,6 @@ export type Article = {
     /**
      *
      */
-    image?: string,
-    /**
-     *
-     */
     modifiedDate: string,
     /**
      *

@@ -1,3 +1,8 @@
+export type NewArticle = {
+    name: string,
+    quantity: number,
+}
+
 export type NewArticleFormProps = {
     /**
      *
@@ -9,4 +14,9 @@ export type NewArticleFormProps = {
      * @default ""
      */
     onClose: () => void,
+    /**
+     *
+     * @default ""
+     */
+    onSubmit: (newArticle: NewArticle) => void,
 }

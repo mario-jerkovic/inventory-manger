@@ -1,5 +1,17 @@
 @import "~@material/typography/dist/mdc.typography.css";
+@import "~@material/list/dist/mdc.list.css";
 
 .form-title {
     padding: 0.5rem 1rem;
+}
+
+.form-title--clickable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.form-title--icon {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

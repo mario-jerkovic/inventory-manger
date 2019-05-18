@@ -10,9 +10,11 @@ import {
 import {
     Avatar,
 } from '../Avatar'
+import clsx from 'clsx'
 
-export const ArticlesTableRow = React.memo<ArticlesTableRowProps>((props) => {
+export const ArticlesTableRow: React.FunctionComponent<ArticlesTableRowProps> = React.memo((props) => {
     const {
+        dateTimeOptions,
         modifiedDate,
         name,
         onClick,
@@ -29,7 +31,12 @@ export const ArticlesTableRow = React.memo<ArticlesTableRowProps>((props) => {
 
 
     return (
-        <DataTableRow onClick={selected ? undefined : onClick} >
+        <DataTableRow
+            className={clsx('article-table-body__row', {
+                'article-table-body__row--error': quantity < 0,
+            })}
+            onClick={selected ? undefined : onClick}
+        >
             <DataTableCell
                 alignMiddle={true}
                 className="article-table-body__cell"
@@ -55,8 +62,21 @@ export const ArticlesTableRow = React.memo<ArticlesTableRowProps>((props) => {
                 alignEnd={true}
                 className="article-table-body__cell"
             >
-                {new Date(modifiedDate).toLocaleString()}
+                {new Intl.DateTimeFormat(
+                    'hr-HR',
+                    dateTimeOptions,
+                ).format(new Date(modifiedDate))}
             </DataTableCell >
         </DataTableRow >
     )
 })
+
+ArticlesTableRow.defaultProps = {
+    dateTimeOptions: {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+    },
+}

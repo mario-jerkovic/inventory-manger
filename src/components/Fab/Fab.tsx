@@ -25,7 +25,6 @@ export const Fab = React.memo<FabProps>((props) => {
         to: {
             transform: 'scale(1)',
         },
-        delay: 300,
     })
 
     return (

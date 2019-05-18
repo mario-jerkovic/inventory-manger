@@ -27,14 +27,16 @@ export const Drawer: React.FunctionComponent<DrawerProps> = (props) => {
             open={isOpen}
             onClose={onClose}
         >
+
             <DrawerHeader >
                 <DrawerTitle >
                     {title}
                 </DrawerTitle >
             </DrawerHeader >
             <DrawerContent >
-                {children}
+                {isOpen ? children : null}
             </DrawerContent >
+
         </MaterialDrawer >
     )
 }
