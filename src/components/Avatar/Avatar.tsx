@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import React from 'react'
 import {
     Icon,
@@ -20,6 +21,7 @@ import './Avatar.css'
 export const Avatar = React.memo<AvatarProps>((props) => {
     const {
         isActive,
+        isError,
     } = props
 
     const avatarSpringRef = React.useRef<any>(null)
@@ -55,14 +57,13 @@ export const Avatar = React.memo<AvatarProps>((props) => {
             className="avatar"
             style={avatarSpringStyle}
         >
+            <div
+                className={clsx('avatar__item ', 'avatar__item--front', {
+                    'avatar__item--error': isError,
+                })}
+            />
             <Theme
                 use={['primaryBg', 'onPrimary']}
-                wrap={true}
-            >
-                <div className="avatar__item avatar__item--front" />
-            </Theme >
-            <Theme
-                use={['secondaryBg', 'onSecondary']}
                 wrap={true}
             >
                 <div className="avatar__item avatar__item--back" >

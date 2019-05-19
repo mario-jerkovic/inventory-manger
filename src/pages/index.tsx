@@ -4,6 +4,10 @@ import {
     Switch,
 } from 'react-router-dom'
 
+import {
+    AuthRoute,
+} from '../components/Session/AuthRoute'
+
 import LoginPage from './Login'
 import ArticlesPage from './Articles'
 
@@ -11,14 +15,14 @@ export const App: React.FunctionComponent<{}> = () => {
 
     return (
         <Switch >
-            <Route
+            <AuthRoute
                 path="/"
                 exact={true}
-                component={LoginPage}
+                component={ArticlesPage}
             />
             <Route
-                path="/articles"
-                component={ArticlesPage}
+                path="/login"
+                component={LoginPage}
             />
         </Switch >
     )

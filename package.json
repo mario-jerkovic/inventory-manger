@@ -10,6 +10,7 @@
     },
     "dependencies": {
         "@rmwc/button": "^5.4.3",
+        "@rmwc/card": "^5.5.1",
         "@rmwc/circular-progress": "^5.5.1",
         "@rmwc/data-table": "^5.4.3",
         "@rmwc/dialog": "^5.5.1",

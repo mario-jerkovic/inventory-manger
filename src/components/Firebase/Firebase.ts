@@ -20,7 +20,22 @@ export class Firebase {
 
         this.auth = firebase.auth()
         this.database = firebase.database()
+
+        this.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     }
+
+    public onAuthUserListener = (
+        next: (user: firebase.User) => void,
+        fallback: () => void,
+    ) => (
+        this.auth.onAuthStateChanged((user) => {
+            user ? next(user) : fallback()
+        })
+    )
+
+    public signInWithEmailAndPassword = async (email: string, password: string) => (
+        this.auth.signInWithEmailAndPassword(email, password)
+    )
 
     public articlesRef = () => (
         this.database.ref('articles')

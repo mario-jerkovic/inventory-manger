@@ -14,6 +14,9 @@ import {
     register,
 } from './serviceWorker'
 import {
+    AuthProvider,
+} from './components/Session/AuthContext'
+import {
     FirebaseProvider,
 } from './components/Firebase'
 
@@ -21,19 +24,24 @@ import './index.css'
 
 ReactDOM.render(
     <BrowserRouter >
-        <FirebaseProvider
-            authDomain={process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}
-            apiKey={process.env.REACT_APP_FIREBASE_API_KEY}
-            databaseURL={process.env.REACT_APP_FIREBASE_DATABASE_URL}
+        <ThemeProvider
+            className="app-root"
+            options={{
+                primary: '#0288D1',
+                secondary: '#FFC107',
+            }}
+            tag="div"
         >
-            <ThemeProvider
-                className="app-root"
-                options={{}}
-                tag="div"
+            <FirebaseProvider
+                authDomain={process.env.REACT_APP_FIREBASE_AUTH_DOMAIN}
+                apiKey={process.env.REACT_APP_FIREBASE_API_KEY}
+                databaseURL={process.env.REACT_APP_FIREBASE_DATABASE_URL}
             >
-                <App />
-            </ThemeProvider >
-        </FirebaseProvider >
+                <AuthProvider >
+                    <App />
+                </AuthProvider >
+            </FirebaseProvider >
+        </ThemeProvider >
     </BrowserRouter >,
     document.getElementById('root'),
 )

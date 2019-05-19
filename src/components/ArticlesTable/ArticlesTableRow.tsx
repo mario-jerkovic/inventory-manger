@@ -10,7 +10,6 @@ import {
 import {
     Avatar,
 } from '../Avatar'
-import clsx from 'clsx'
 
 export const ArticlesTableRow: React.FunctionComponent<ArticlesTableRowProps> = React.memo((props) => {
     const {
@@ -32,9 +31,7 @@ export const ArticlesTableRow: React.FunctionComponent<ArticlesTableRowProps> = 
 
     return (
         <DataTableRow
-            className={clsx('article-table-body__row', {
-                'article-table-body__row--error': quantity < 0,
-            })}
+            className="article-table-body__row"
             onClick={selected ? undefined : onClick}
         >
             <DataTableCell
@@ -44,6 +41,7 @@ export const ArticlesTableRow: React.FunctionComponent<ArticlesTableRowProps> = 
             >
                 <Avatar
                     isActive={selected}
+                    isError={quantity < 0}
                 />
             </DataTableCell >
             <DataTableCell

@@ -1,0 +1,30 @@
+@import "~@material/card/dist/mdc.card.css";
+@import "~@material/button/dist/mdc.button.css";
+@import "~@material/icon-button/dist/mdc.icon-button.css";
+@import "~@material/textfield/dist/mdc.textfield.css";
+@import "~@material/floating-label/dist/mdc.floating-label.css";
+@import "~@material/notched-outline/dist/mdc.notched-outline.css";
+@import "~@material/line-ripple/dist/mdc.line-ripple.css";
+
+.login-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form__card {
+    width: 21rem;
+}
+
+.login-form__content {
+    padding: 1rem;
+}
+
+.login-form__textField {
+}
+
+.login-form__textField:last-child {
+    margin-top: 1rem;
+}

@@ -1251,6 +1251,18 @@
     "@material/theme" "^1.1.0"
     "@material/typography" "^1.0.0"
 
+"@material/card@^2.0.0":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@material/card/-/card-2.1.1.tgz#f15b59d2dff4c99b20eb014dbd70c22bd1a3bc6f"
+  integrity sha512-LZ1nYncZOa7RNzo2Rp+yNvvhPdcbymTA+LHOXqU01c6KSKIfwhfK+oMV4qRKyUTrF1H83rdlGAXF69YISFr9+g==
+  dependencies:
+    "@material/elevation" "^1.1.0"
+    "@material/feature-targeting" "^0.44.1"
+    "@material/ripple" "^2.1.1"
+    "@material/rtl" "^0.42.0"
+    "@material/shape" "^1.1.1"
+    "@material/theme" "^1.1.0"
+
 "@material/dialog@^2.0.0":
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/@material/dialog/-/dialog-2.1.1.tgz#028fdf5782344cea065b4e249d50145faf3d6609"
@@ -1542,6 +1554,18 @@
     "@rmwc/ripple" "^5.5.1"
     "@rmwc/types" "^5.5.1"
 
+"@rmwc/card@^5.5.1":
+  version "5.5.1"
+  resolved "https://registry.yarnpkg.com/@rmwc/card/-/card-5.5.1.tgz#dbb294a3d1130ae1f83a61fb1aef1803d30cdcd3"
+  integrity sha512-ZfRdJz3nOyNKkM0r4t15ESCYj9osejdAcSyt0Xr3gHDZDcWlH9Sqr8EtJcMe/bbnfn/UF3GwZ/tlvqKaMcUp4Q==
+  dependencies:
+    "@material/card" "^2.0.0"
+    "@rmwc/base" "^5.5.1"
+    "@rmwc/button" "^5.5.1"
+    "@rmwc/icon-button" "^5.5.1"
+    "@rmwc/ripple" "^5.5.1"
+    "@rmwc/types" "^5.5.1"
+
 "@rmwc/circular-progress@^5.5.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@rmwc/circular-progress/-/circular-progress-5.5.1.tgz#bb4bd69344e965ed46a35d2be4dce88d492602ca"
@@ -1600,7 +1624,7 @@
     "@rmwc/base" "^5.5.1"
     "@rmwc/types" "^5.5.1"
 
-"@rmwc/icon-button@^5.5.0":
+"@rmwc/icon-button@^5.5.0", "@rmwc/icon-button@^5.5.1":
   version "5.5.1"
   resolved "https://registry.yarnpkg.com/@rmwc/icon-button/-/icon-button-5.5.1.tgz#d76f74ed2d5a1a996a228912c1a75e5e2beb52dd"
   integrity sha512-ZksCtZ4bodBrGfmJifBzl3cpN+XjOnRx43yUAF7+N3UUz0Y9X2MD4DEji6i7weR16ZfC4cJxVX0P/dkbR98gTA==

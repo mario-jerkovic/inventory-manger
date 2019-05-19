@@ -38,14 +38,20 @@ import {
 import {
     RemoveToolbar,
 } from '../components/RemoveToolbar'
+import {
+    Loading,
+} from '../components/Loading'
+import {
+    articleDrawerReducer,
+} from '../reducers/articleDrawer'
+import {
+    articleDialogReducer,
+} from '../reducers/articleDialog'
+import {
+    articlesTableReducer,
+} from '../reducers/articlesTable'
 
 import './Articles.css'
-import { articleDrawerReducer } from '../reducers/articleDrawer'
-import { articleDialogReducer } from '../reducers/articleDialog'
-import { articlesTableReducer } from '../reducers/articlesTable'
-import { CircularProgress } from '@rmwc/circular-progress'
-import { Typography } from '@rmwc/typography'
-
 
 const Articles: React.FunctionComponent<{}> = () => {
 
@@ -199,17 +205,8 @@ const Articles: React.FunctionComponent<{}> = () => {
                 />
             </Drawer >
             <div className="articles__layout" >
-                {loading || !articleCollections ? (
-                    <div className="articles__loading" >
-                        <CircularProgress size="large" />
-                        <Typography
-                            className="articles__loading-text"
-                            use="subtitle1"
-                        >
-                            Učitavanje...
-                        </Typography >
-                    </div >
-                ) : (
+                <Loading show={loading} />
+                {(!loading && articleCollections) && (
                     <ArticlesTable >
                         {Object.entries<Article>(articleCollections)
                             .map(([key, { name, modifiedDate, quantity }]) => (

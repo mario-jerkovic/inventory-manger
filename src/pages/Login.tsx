@@ -1,20 +1,49 @@
 import React from 'react'
 import {
-    Link,
+    Redirect,
+    RouteComponentProps,
+    withRouter,
 } from 'react-router-dom'
+
+import {
+    Firebase,
+    FirebaseContext,
+} from '../components/Firebase'
+import {
+    AuthContext,
+} from '../components/Session/AuthContext'
+import {
+    Login,
+    LoginForm,
+} from '../components/LoginForm'
 
 import './Login.css'
 
-const Login: React.FunctionComponent<{}> = () => {
+const LoginPage: React.FunctionComponent<RouteComponentProps> = (props) => {
+    const {
+        location,
+    } = props
+
+    const authContext = React.useContext(AuthContext)
+    const firebaseContext: Firebase = React.useContext(FirebaseContext)
+
+    const handleSubmit = React.useCallback((login: Login) => {
+        firebaseContext.signInWithEmailAndPassword(login.email, login.password)
+    }, [firebaseContext])
+
+    if (authContext.isAuthenticated) {
+        return (
+            <Redirect
+                to={location.state || { from: { pathname: '/' } }}
+            />
+        )
+    }
 
     return (
-        <>
-            Login page
-            <Link to="/articles" >
-                Articles
-            </Link >
-        </>
+        <LoginForm
+            onSubmit={handleSubmit}
+        />
     )
 }
 
-export default Login
+export default withRouter(LoginPage)

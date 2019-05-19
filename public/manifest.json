@@ -1,8 +1,8 @@
 {
     "name": "Inventory manager",
     "short_name": "Inventory manager",
-    "theme_color": "#6200EE",
-    "background_color": "#2196f3",
+    "theme_color": "#0288D1",
+    "background_color": "#FFFFFF",
     "display": "standalone",
     "Scope": "/",
     "start_url": "/",

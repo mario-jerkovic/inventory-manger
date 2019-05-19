@@ -52,7 +52,6 @@ export const RemoveToolbar: React.FunctionComponent<RemoveToolbarProps> = (props
                     >
                         <TopAppBar
                             fixed={false}
-                            theme={['secondaryBg', 'onSecondary']}
                         >
                             <TopAppBarRow >
                                 <TopAppBarSection >

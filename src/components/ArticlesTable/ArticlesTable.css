@@ -21,15 +21,3 @@
 .article-table-head__cell, .article-table-body__cell {
     border: none;
 }
-
-.article-table-body__cell {
-    background-color: transparent;
-}
-
-.article-table-body__row {
-    transition: background-color 0.3s ease-in-out;
-}
-
-.article-table-body__row--error {
-    background-color: #B000205E;
-}
