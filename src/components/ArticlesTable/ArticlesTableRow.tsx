@@ -54,7 +54,7 @@ export const ArticlesTableRow: React.FunctionComponent<ArticlesTableRowProps> = 
                 alignEnd={true}
                 className="article-table-body__cell"
             >
-                {quantity}
+                {Number(quantity).toFixed(2)}
             </DataTableCell >
             <DataTableCell
                 alignEnd={true}

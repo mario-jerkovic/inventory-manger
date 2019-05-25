@@ -90,7 +90,6 @@ export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps
                     required={true}
                     step="any"
                     type="number"
-                    value={state.price}
                 />
                 <FormSpacer />
                 <TextField
@@ -101,7 +100,6 @@ export const UpdateQuantityForm: React.FunctionComponent<UpdateQuantityFormProps
                     required={true}
                     step="any"
                     type="number"
-                    value={state.totalAmount}
                 />
                 <FormSpacer />
                 <TextField
